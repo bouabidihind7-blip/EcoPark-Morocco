@@ -1,0 +1,679 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[a4paper,margin=2.5cm,headheight=15pt]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage{parskip}
+\usepackage{microtype}
+\usepackage[table]{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\graphicspath{{rapport_assets/}}
+
+\definecolor{vertFonce}{HTML}{176B45}
+\definecolor{vertEcoPark}{HTML}{1B8054}
+\definecolor{vertPaleEcoPark}{HTML}{E8F5EC}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=vertFonce,
+  citecolor=vertFonce,
+  urlcolor=vertFonce,
+  pdftitle={EcoPark Maroc -- Rapport de Projet Greenovation 2026},
+  pdfauthor={EnerTech Group}
+}
+\setlist[itemize]{label={\textcolor{vertEcoPark}{\tiny\textbullet}},leftmargin=*,itemsep=0.25em,topsep=0.35em}
+\setlist[enumerate]{leftmargin=1.7em,itemsep=0.3em,topsep=0.35em}
+\renewcommand{\arraystretch}{1.18}
+\captionsetup{font=small,labelfont=bf,justification=centering}
+
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\color{vertFonce}}
+  {\Large\chaptertitlename\ \thechapter}
+  {10pt}
+  {\Huge}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{vertFonce}}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{vertFonce}}
+  {\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\color{vertFonce}}
+  {\thesubsubsection}{1em}{}
+\titlespacing*{\chapter}{0pt}{-20pt}{24pt}
+\titlespacing*{\section}{0pt}{1.1em}{0.55em}
+\titlespacing*{\subsection}{0pt}{0.9em}{0.35em}
+\titlespacing*{\subsubsection}{0pt}{0.7em}{0.25em}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\leftmark}}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\newcommand{\notereelle}[1]{%
+  \par\medskip\noindent
+  \colorbox{vertPaleEcoPark}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\small #1}}%
+  \par\medskip
+}
+\newcommand{\tableau}[1]{\captionof{table}{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\begin{document}
+
+\newgeometry{top=2cm,bottom=2cm,left=2.3cm,right=2.3cm}
+\begin{titlepage}
+\thispagestyle{empty}
+\noindent
+\begin{minipage}[c]{0.24\linewidth}
+  \raggedright
+  \includegraphics[width=\linewidth]{logo_ensa.jpg}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.48\linewidth}
+  \centering
+  \small
+  \textbf{Université Hassan Premier}\\
+  \textbf{École Nationale des Sciences Appliquées}\\
+  \textbf{Berrechid}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.24\linewidth}
+  \raggedleft
+  \includegraphics[width=\linewidth]{logo_universite.jpg}
+\end{minipage}
+
+\vspace{1.7cm}
+\begin{center}
+  {\LARGE\bfseries\color{vertFonce} Rapport de Projet}\\[0.5cm]
+  {\large\bfseries Greenovation Cup -- Smart \& Green Morocco-IoT}
+
+  \vspace{1.7cm}
+  {\bfseries\color{vertFonce} Thème :}\\[0.35cm]
+  {\LARGE\bfseries\color{vertFonce}
+  EcoPark Maroc : plateforme de stationnement intelligent et durable}\\[0.55cm]
+  {\color{vertEcoPark}\rule{0.62\linewidth}{0.5mm}}
+
+  \vspace{0.8cm}
+  {\small Projet présenté dans le cadre de Greenovation Cup}\\[0.6cm]
+  \includegraphics[width=3.1cm]{logo_ecorise.jpg}
+\end{center}
+
+\vspace{1.2cm}
+\noindent
+\begin{minipage}{0.48\textwidth}
+  \raggedright
+  \small\textbf{Réalisé par :}\\[0.2cm]
+  \normalsize EnerTech Group\\[0.15cm]
+  Ahlam ERREBAIY\\
+  Marwa BENALI\\
+  Aya BEN HAMOUCHE\\
+  Hiba FAKIR\\
+  Fatima-ezzahrae ELKHAYARI
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}
+  \raggedright
+  \small\textbf{Encadré par :}\\[0.2cm]
+  \normalsize Ecorise
+\end{minipage}
+
+\vfill
+\begin{center}
+  {\normalsize Année 2026}
+\end{center}
+\end{titlepage}
+\restoregeometry
+
+\tableofcontents
+\clearpage
+
+\chapter{Résumé Exécutif}
+
+EcoPark Maroc est un prototype de plateforme de stationnement intelligent et écologique. Il présente un inventaire de démonstration de 18 parkings répartis dans cinq villes marocaines et propose des parcours de consultation, de réservation et d'accès par QR code. L'application comprend également une page de recharge pour véhicules électriques et un tableau de bord énergétique exploratoire.
+
+Les disponibilités actuelles ne proviennent pas de caméras physiques. L'interface React communique avec une API FastAPI et une base PostgreSQL. Un simulateur backend envoie des états prédéfinis pour une place ; un dépôt externe de vision par ordinateur peut estimer l'occupation, mais il n'est pas connecté à EcoPark.
+
+\subsection*{Points clés du projet}
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{0.9\textwidth}{>{\bfseries}Y Y}
+\toprule
+18 parkings de démonstration & 5 villes marocaines\\
+11\,401 places dans l'inventaire initial & 391 bornes VE dans les données initiales\\
+React / TypeScript & FastAPI / Python\\
+PostgreSQL & Réservations et événements persistés par l'API\\
+Détection visuelle non intégrée & États de place simulés pour tester l'API\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Les chiffres d'inventaire sont des données de démonstration, et non un recensement national. Les caractéristiques du parking pilote, les performances énergétiques, les économies de CO$_2$ et les revenus présentés dans les sections suivantes sont des hypothèses ou projections, sauf indication explicite contraire.
+
+\chapter{Problématique et Contexte}
+
+\subsection{La crise du stationnement urbain au Maroc}
+
+Les grandes métropoles marocaines -- Casablanca, Rabat, Marrakech, Tanger et Agadir -- connaissent une croissance urbaine et une motorisation rapides. La difficulté à connaître à l'avance la disponibilité des places peut provoquer des déplacements supplémentaires, de la congestion et une perte de temps. Les conducteurs rencontrent également des difficultés pour localiser les bornes de recharge et les places accessibles.
+
+\subsection{Chiffres alarmants}
+
+Le dossier initial cite plusieurs estimations sur le trafic, les émissions et l'accès aux bornes VE. Leur source n'étant pas suffisamment documentée dans le projet, elles ne sont pas présentées ici comme des résultats vérifiés.
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{Y Y Y}
+\toprule
+\textbf{Indicateur cité dans le dossier initial} & \textbf{Valeur citée} & \textbf{Traitement dans ce rapport}\\
+\midrule
+Trafic attribué à la recherche de stationnement & 30 à 40\,\% & Estimation à sourcer ; non mesurée par EcoPark\\
+CO$_2$ associé à la recherche de place & 0,12 kg/h & Hypothèse de calcul de l'application, non validée par mesure\\
+Difficulté de localisation des bornes VE & 30\,\% & Affirmation du dossier initial à vérifier\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Estimations de contexte à documenter}
+
+\subsection{Les problèmes identifiés}
+
+L'analyse initiale a fait ressortir six défis auxquels le prototype cherche à répondre :
+\begin{enumerate}
+  \item manque d'information centralisée sur les places disponibles ;
+  \item absence de réservation numérique dans un parcours unifié ;
+  \item difficulté à repérer les bornes VE disponibles ;
+  \item expériences fragmentées entre opérateurs ;
+  \item potentiel solaire des parkings à étudier ;
+  \item besoin de mieux signaler les places accessibles aux personnes à mobilité réduite.
+\end{enumerate}
+
+\subsection{Alignement avec la Vision Maroc 2030}
+
+EcoPark s'inscrit dans une réflexion sur la mobilité durable, l'efficacité énergétique et l'accessibilité. Le dossier initial mentionne un objectif national de réduction des émissions de gaz à effet de serre à l'horizon 2030. Toute valeur chiffrée relative aux engagements nationaux devra être accompagnée d'une référence officielle à jour. Le prototype ne mesure pas sa contribution à ces objectifs.
+
+\chapter{Solution Proposée -- EcoPark Maroc}
+
+EcoPark est une application web de démonstration destinée à réunir la consultation des parkings, la réservation et l'information sur les bornes VE. L'objectif est de préparer un service connecté, tout en distinguant les fonctions actuellement implémentées des intégrations envisagées.
+
+\subsection{Proposition de valeur}
+
+\paragraph{Pour les conducteurs}
+\begin{itemize}
+  \item consulter les parkings et leurs disponibilités de démonstration ;
+  \item créer et retrouver une réservation ;
+  \item consulter les places VE et PMR disponibles dans l'inventaire ;
+  \item présenter un QR code associé à une réservation pour le parcours d'accès simulé ;
+  \item visualiser une estimation de CO$_2$ calculée par l'application.
+\end{itemize}
+
+\paragraph{Pour les opérateurs de parking}
+\begin{itemize}
+  \item explorer une interface de consultation des disponibilités ;
+  \item tester l'enregistrement d'événements de place via l'API ;
+  \item examiner un scénario de suivi énergétique et des données de fréquentation.
+\end{itemize}
+
+\notereelle{Les fonctions de paiement réel, de pilotage d'équipements, de détection par caméra en production et d'analyse opérateur ne sont pas intégrées dans le prototype actuel.}
+
+\subsection{Stack technologique}
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{Y Y Y}
+\toprule
+\textbf{Couche} & \textbf{Technologie actuelle} & \textbf{Rôle}\\
+\midrule
+Frontend & React 19, TypeScript, Vite & Interface web monopage et composants interactifs\\
+Style & Tailwind CSS & Mise en page responsive et styles de l'interface\\
+État frontend & React Context & État partagé et communication avec l'API\\
+Backend & FastAPI, Python & Authentification, parkings, réservations et événements\\
+Base de données & PostgreSQL & Persistance des comptes, places, réservations et événements\\
+Accès aux données & psycopg & Connexion du backend à PostgreSQL\\
+Graphiques & Recharts & Visualisations du tableau de bord énergétique\\
+Icônes & Lucide React & Icônes de l'interface\\
+Météo & API Open-Meteo & Données météo et irradiance utilisées par le module énergie\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Stack technologique du prototype EcoPark}
+
+\subsection{Architecture de l'application}
+
+L'interface est une application monopage (SPA). Le navigateur communique avec le backend par HTTP ; l'API applique la logique métier et lit ou écrit les données persistantes dans PostgreSQL.
+
+\begin{center}
+\fcolorbox{vertEcoPark}{vertPaleEcoPark}{%
+\parbox{0.88\textwidth}{\centering
+\textbf{Interface React / TypeScript}\\[0.35em]
+\textcolor{vertEcoPark}{$\Downarrow$}\quad requêtes HTTP et cookie de session\\[0.35em]
+\textbf{API FastAPI / Python}\\[0.35em]
+\textcolor{vertEcoPark}{$\Downarrow$}\quad accès via psycopg\\[0.35em]
+\textbf{Base de données PostgreSQL}}}
+\end{center}
+
+Les mots de passe sont hachés avec Argon2 et le navigateur transporte la session dans un cookie HttpOnly. Les préférences d'affichage et certaines valeurs du portefeuille ou du forfait restent locales à l'interface ; elles ne constituent pas des transactions financières en base.
+
+\subsection{Modules fonctionnels détaillés}
+
+\subsubsection*{A) Tableau de bord}
+Le tableau de bord présente les parkings, le nombre de places et de bornes disponibles, les réservations et des indicateurs de démonstration. Les données des parkings sont rechargées depuis l'API environ toutes les 20 secondes. Le panneau manuel d'entrées/sorties est local à l'interface et ne simule pas une détection d'image.
+
+\subsubsection*{B) Système de réservation (BookingFlow) -- 4 étapes}
+\begin{enumerate}
+  \item choix du type de place : Standard, VE, PMR ou VIP ;
+  \item choix de la durée parmi les durées proposées ;
+  \item vérification du solde de démonstration et confirmation de la réservation auprès du backend ;
+  \item affichage du numéro de place et du QR code fondé sur le jeton aléatoire retourné par l'API.
+\end{enumerate}
+La réservation et son prix sont enregistrés dans PostgreSQL. Le portefeuille affiché et son débit restent des opérations simulées côté frontend.
+
+\subsubsection*{C) État d'occupation des places}
+Le prototype utilise une route backend d'événements caméra et un simulateur qui envoie des états prédéfinis \texttt{free} et \texttt{occupied}. Le détecteur externe décrit à la section 4 peut fournir un résultat d'occupation, mais il n'est pas relié à l'API.
+
+\subsubsection*{D) Moniteur énergétique solaire}
+La page énergie exploite des données météorologiques et d'irradiance d'Open-Meteo, actualisées périodiquement. La production solaire, l'état de batterie, la consommation VE et les projections affichés sont calculés ou simulés ; aucune installation physique n'est télémétrée.
+
+\subsubsection*{E) Recharge des véhicules électriques}
+L'interface liste les parkings de l'inventaire disposant de bornes VE et leurs disponibilités de démonstration. Elle ne démarre pas une session de recharge physique et ne mesure pas l'énergie délivrée.
+
+\subsection{Grille tarifaire}
+
+\paragraph{Types de places}
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{Y c Y Y}
+\toprule
+\textbf{Type} & \textbf{Multiplicateur} & \textbf{Exemple (base 5 MAD/h)} & \textbf{Description}\\
+\midrule
+Standard & $\times 1{,}0$ & 5 MAD/h & Place classique\\
+Recharge VE & $\times 1{,}4$ & Variable selon le scénario & Place associée à une borne VE\\
+PMR & $\times 0{,}8$ & 4 MAD/h & Place accessible, tarif réduit\\
+VIP & $\times 1{,}8$ & 9 MAD/h & Place premium proposée\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Multiplicateurs de tarification présentés par l'application}
+
+\paragraph{Plans d'abonnement}
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{Y c c Y}
+\toprule
+\textbf{Plan} & \textbf{Prix affiché} & \textbf{Réduction affichée} & \textbf{Avantage proposé}\\
+\midrule
+Éco-Découverte & 0 MAD/mois & 0\,\% & Recherche et réservation\\
+Standard & 49 MAD/mois & 10\,\% & Réduction sur les réservations\\
+Premium & 99 MAD/mois & 20\,\% & Réduction et priorité proposée\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Forfaits commerciaux proposés dans l'interface}
+Les forfaits, remises et bonus de portefeuille sont des éléments de démonstration. Aucun abonnement ou paiement n'est collecté.
+
+\chapter{Système IoT Embarqué -- Capteurs \& Connectivité}
+
+Cette section décrit l'approche de détection d'occupation étudiée pour EcoPark et les événements actuellement simulés par le backend. Aucun capteur physique n'est connecté à l'application.
+
+\subsection{Principe de détection de l'occupation}
+
+Le dépôt externe \href{https://github.com/8harath/Car-Parking-Detection}{8harath/Car-Parking-Detection} estime, pour des zones de stationnement définies dans l'image, si une place est libre ou occupée. Le parcours image utilise des traitements OpenCV et YOLOv8 pour détecter des véhicules et les associer aux zones. Le parcours vidéo repose principalement sur des transformations OpenCV et un seuil de pixels appliqué aux régions configurées.
+
+Le résultat pertinent pour EcoPark est l'état de la place (\texttt{free} ou \texttt{occupied}). Les scores annoncés dans le dépôt externe n'ont pas été reproduits ni validés sur un jeu de données EcoPark.
+
+\subsection{Flux de données -- du résultat au backend}
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{c Y Y}
+\toprule
+\textbf{Étape} & \textbf{Composant} & \textbf{Action}\\
+\midrule
+1 & Détecteur externe (non intégré) & Estime l'état des zones de places à partir d'une image ou d'une vidéo\\
+2 & Adaptateur à réaliser & Associe chaque zone à un identifiant de parking et de place EcoPark\\
+3 & Événement caméra & Transmet parking, place, statut et horodatage à l'API\\
+4 & FastAPI & Valide l'événement et la place ciblée\\
+5 & PostgreSQL & Persiste le nouvel état de la place\\
+6 & Frontend & Recharge les agrégats de disponibilité depuis l'API\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Flux cible entre détection d'occupation et application}
+
+\notereelle{Seul le trajet simulateur backend $\rightarrow$ API $\rightarrow$ PostgreSQL est actuellement implémenté. Les étapes de détection et d'adaptation restent à réaliser.}
+
+\subsection{Intégration dans l'application EcoPark}
+
+La route \texttt{POST /camera-events} accepte les événements d'état de place. Le simulateur caméra envoie les champs \texttt{parking_id}, \texttt{spot_id}, \texttt{status} et \texttt{occurred_at}. Le frontend interroge régulièrement l'API pour actualiser les disponibilités.
+
+Les réservations et les événements d'accès QR sont traités par des routes distinctes. Le panneau \texttt{SensorPanel} permet aussi une démonstration manuelle d'entrées/sorties, mais son état reste en mémoire dans le navigateur et n'est pas la sortie du détecteur ni une mise à jour de l'inventaire PostgreSQL.
+
+\subsection{Phase de simulation -- simulateurs backend}
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{Y Y Y}
+\toprule
+\textbf{Simulateur} & \textbf{Fonction} & \textbf{Persistance}\\
+\midrule
+\texttt{camera\_simulator.py} & Alterne \texttt{free}/\texttt{occupied} sur la place \texttt{A-01} du parking 16 et envoie un événement toutes les deux secondes & L'API met à jour PostgreSQL\\
+\texttt{vehicle\_simulator.py} & Crée une réservation de démonstration puis envoie des événements d'accès associés au jeton QR & Réservation et accès sont traités par le backend\\
+\texttt{SensorPanel.tsx} & Simulation manuelle locale d'entrée/sortie & Mémoire frontend uniquement\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Rôle des démonstrateurs actuels}
+
+Ces scripts testent des échanges logiciels ; ils ne lisent pas de capteurs physiques et ne traitent pas d'images ou de vidéo.
+
+\subsection{Scalabilité du réseau de détection}
+
+\normalfont\rmfamily
+Pour passer d'une place simulée à un déploiement, il faudra définir une correspondance stable entre les régions d'image et les places, gérer les événements répétés ou reçus en retard, vérifier les statuts et horodatages, et mesurer les erreurs de classification dans des conditions représentatives. Le nombre de capteurs, leur coût et la latence ne peuvent pas être annoncés comme des caractéristiques opérationnelles avant un pilote instrumenté.
+
+\chapter{Infrastructure Physique \& Design SketchUp}
+
+\subsection{Parking pilote -- Marina Agadir EcoPark}
+
+Le dossier initial présente un concept de parking pilote à Marina Agadir, accompagné d'un modèle SketchUp. Ce scénario reste une proposition de conception et n'est pas une installation exploitée par le prototype.
+
+\noindent\textbf{Lien vers le modèle 3D SketchUp :}
+\href{https://app.sketchup.com/share/tc/europe/_LrQkTcFvUo}{ouvrir le modèle}.
+
+\subsection{Spécifications architecturales}
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{Y Y}
+\toprule
+\textbf{Caractéristique envisagée} & \textbf{Valeur du scénario initial}\\
+\midrule
+Niveaux & 4 niveaux, toiture technique comprise\\
+Capacité & 200 places (50 places par niveau)\\
+Surface au sol & Environ 3\,000 m$^2$\\
+Surface de toiture solaire & 625 m$^2$\\
+Bornes VE & 40 (hypothèse de conception)\\
+Panneaux & Monocristallins, rendement nominal annoncé de 20\,\%\\
+Localisation & Marina d'Agadir, coordonnées du scénario : 30,4278 N ; 9,5981 W\\
+Accès et éclairage & Équipements proposés dans le dossier initial, non vérifiés sur site\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Caractéristiques proposées pour le parking pilote}
+
+\subsection{Système de stockage d'énergie}
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{Y Y}
+\toprule
+\textbf{Composant} & \textbf{Spécification envisagée}\\
+\midrule
+Capacité batterie & 500 kWh\\
+Configuration & 5 racks de 100 kWh\\
+Technologie & Lithium-fer-phosphate (LFP)\\
+Onduleur & 78 kW dans le scénario de conception\\
+Gestion & BMS et supervision à définir pour un futur pilote\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Hypothèses de stockage du scénario pilote}
+Ces équipements ne sont pas connectés à EcoPark ; les indications de durée de vie et d'autonomie du dossier initial sont à confirmer par des spécifications fournisseur et une étude électrique.
+
+\chapter{Performance Énergétique \& Chiffres Clés}
+
+\subsection{Données de base -- ressource solaire d'Agadir}
+
+Les paramètres ci-dessous proviennent du scénario de calcul présenté dans le dossier initial. Ils ne sont pas des relevés effectués par l'application.
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{Y Y}
+\toprule
+\textbf{Paramètre hypothétique} & \textbf{Valeur du scénario}\\
+\midrule
+Irradiation solaire moyenne & 5,8 kWh/m$^2$/jour\\
+Ensoleillement annuel & 3\,300 heures/an\\
+Surface photovoltaïque envisagée & 625 m$^2$\\
+Rendement nominal & 20\,\%\\
+Coefficient de performance (PR) & 0,85\\
+Puissance crête de l'installation & 78 kW (limitation d'onduleur proposée)\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Hypothèses solaires du scénario pilote}
+
+\subsection{Production énergétique calculée}
+
+Avec ces hypothèses, l'ordre de grandeur annuel s'obtient par :
+\[
+625\ \mathrm{m^2} \times 5{,}8\ \mathrm{kWh/m^2/jour}
+\times 0{,}20 \times 0{,}85 \times 365
+\simeq 224\,931\ \mathrm{kWh/an}.
+\]
+Soit environ 225 MWh/an, 616 kWh/jour en moyenne ou 18\,500 kWh/mois en moyenne. Ces valeurs sont des projections ; elles dépendent des données solaires réelles, de l'orientation, des ombrages, des pertes et de la disponibilité de l'installation.
+
+\subsection{Couverture des besoins VE}
+
+Les pourcentages du dossier initial sont des scénarios simplifiés qui comparent une puissance solaire supposée à une demande VE estimée. Ils ne reposent pas sur des mesures de bornes ou sur une simulation énergétique validée.
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{Y c Y}
+\toprule
+\textbf{Scénario initial} & \textbf{Couverture citée} & \textbf{Limite}\\
+\midrule
+5 VE à 22 kW, plein ensoleillement & Environ 71\,\% & Hypothèse de puissance, non mesurée\\
+5 VE à 22 kW, couverture nuageuse partielle & 40 à 55\,\% & Hypothèse météorologique simplifiée\\
+Recharge de nuit sur batterie & Dépend du stockage & Batterie de 500 kWh non installée\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Scénarios énergétiques projetés pour la recharge VE}
+
+\subsection{Portefeuille des 18 parkings}
+
+Le tableau présente les capacités et bornes des données initiales intégrées au prototype. Les disponibilités évoluent avec les réservations et les événements backend.
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{Y c r r c}
+\toprule
+\textbf{Ville} & \textbf{Parkings} & \textbf{Places} & \textbf{Bornes VE} & \textbf{Tarifs de base}\\
+\midrule
+Casablanca & 5 & 3\,801 & 118 & 5 à 8 MAD/h\\
+Marrakech & 4 & 2\,150 & 75 & 4 à 8 MAD/h\\
+Rabat & 3 & 2\,050 & 63 & 5 à 7 MAD/h\\
+Tanger & 3 & 2\,150 & 62 & 5 à 7 MAD/h\\
+Agadir & 3 & 1\,250 & 73 & 4 à 6 MAD/h\\
+\midrule
+\textbf{Total} & \textbf{18} & \textbf{11\,401} & \textbf{391} & --\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Répartition de l'inventaire de démonstration EcoPark}
+
+\chapter{Impact Environnemental}
+
+\subsection{Réduction des émissions de CO$_2$}
+
+Le prototype affiche un indicateur théorique d'économie de CO$_2$. Il ne mesure pas les émissions réelles évitées et ne permet pas, à lui seul, de démontrer un effet causal.
+
+\paragraph{A) Estimation associée à l'usage intelligent du stationnement}
+\[
+\text{CO}_2\text{ estimé (kg)} =
+0{,}12 \times \text{durée de réservation (heures)}.
+\]
+Le coefficient de 0,12 kg/h est une hypothèse logicielle reprise du dossier initial. Le temps de conduite réellement évité et le facteur d'émission d'un véhicule n'ont pas été mesurés dans le projet.
+
+\paragraph{B) Projection associée à l'énergie solaire}
+Le dossier initial applique un facteur d'émission supposé de 0,58 kg CO$_2$/kWh à environ 225\,000 kWh/an :
+\[
+225\,000 \times 0{,}58 \simeq 130\,500\ \mathrm{kg\ CO_2/an}.
+\]
+Le résultat, environ 130,5 tonnes/an, est une projection qui dépend de la production réellement obtenue et du facteur d'émission retenu. Il ne s'agit pas d'une économie constatée par EcoPark.
+
+\subsection{Contribution aux ODD}
+
+EcoPark peut être rapproché de plusieurs objectifs de développement durable des Nations unies. Cette correspondance décrit l'intention du projet et non un impact démontré.
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{c Y Y}
+\toprule
+\textbf{ODD} & \textbf{Objectif} & \textbf{Lien envisagé avec EcoPark}\\
+\midrule
+7 & Énergie propre & Étudier l'alimentation solaire d'infrastructures VE\\
+9 & Industrie, innovation et infrastructure & Prototype numérique et étude de l'intégration de données\\
+10 & Inégalités réduites & Prise en compte des places PMR dans le parcours de réservation\\
+11 & Villes et communautés durables & Réduire les déplacements de recherche, sous réserve d'évaluation\\
+13 & Lutte contre les changements climatiques & Mesurer à terme les effets d'une meilleure gestion et d'une énergie bas carbone\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Contribution envisagée aux ODD}
+
+\chapter{Modèle Économique}
+
+\subsection{Sources de revenus}
+
+Le dossier propose des revenus provenant du stationnement, de la recharge VE et de forfaits. Les tarifs EV ci-dessous sont ceux de l'interface de démonstration ; ils ne correspondent pas à une recharge réelle facturée par le système.
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{Y Y Y}
+\toprule
+\textbf{Source envisagée} & \textbf{Tarif indicatif du scénario} & \textbf{Statut actuel}\\
+\midrule
+Stationnement standard & Selon le parking, environ 4 à 8 MAD/h & Tarif affiché ; paiement non connecté\\
+Stationnement VIP & Multiplicateur proposé $\times 1{,}8$ & Fonction de réservation de démonstration\\
+Recharge VE standard AC (7,4 kW) & 30 MAD/h & Tarif de démonstration, sans session physique\\
+Recharge VE rapide AC (22 kW) & 60 MAD/h & Tarif de démonstration, sans session physique\\
+Recharge VE ultra-rapide DC (50 kW) & 100 MAD/h & Tarif de démonstration, sans session physique\\
+Abonnement Standard / Premium & 49 / 99 MAD par mois & Plans affichés, aucune collecte\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Sources de revenus envisagées}
+
+\subsection{Estimation de revenus -- Parking Pilote Marina Agadir}
+
+Le scénario financier ci-dessous reprend les hypothèses initiales : occupation de 70\,\%, dix heures d'activité par jour, 160 places standard facturées 5 MAD/h, 40 bornes avec une recette moyenne supposée de 60 MAD/h pendant quatre heures, et 100 abonnés moyens. Il ne constitue pas une prévision garantie.
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{Y r r c}
+\toprule
+\textbf{Flux de revenu projeté} & \textbf{MAD/jour} & \textbf{MAD/an} & \textbf{Part approximative}\\
+\midrule
+Stationnement standard & 5\,600 & 2\,044\,000 & 44,7\,\%\\
+Recharge VE & 6\,720 & 2\,452\,800 & 53,7\,\%\\
+Abonnements & 200 & 73\,000 & 1,6\,\%\\
+\textbf{Total indicatif} & \textbf{12\,520} & \textbf{4\,569\,800} & \textbf{100\,\%}\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Projection de revenus du parking pilote -- non réalisée}
+
+\chapter{Outils \& Technologies utilisés}
+
+\subsection{Développement}
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{Y Y}
+\toprule
+\textbf{Outil / technologie} & \textbf{Usage actuel ou statut}\\
+\midrule
+React 19, TypeScript, Vite & Interface web et compilation du frontend\\
+Tailwind CSS & Mise en forme de l'interface\\
+FastAPI, Python & API backend des comptes, parkings, réservations et événements\\
+PostgreSQL, psycopg & Persistance et accès relationnel aux données\\
+Argon2 & Hachage des mots de passe\\
+Recharts, Lucide React & Graphiques et icônes de l'interface\\
+Open-Meteo & Données météo/irradiance ; le reste du modèle énergie est simulé ou estimé\\
+OpenCV, YOLOv8 & Technologies citées dans le dépôt externe de détection, non intégré à EcoPark\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Technologies du prototype et du détecteur externe}
+
+\subsection{Design \& Modélisation}
+
+Le dossier initial mentionne Tailwind CSS, des maquettes d'interface et un modèle SketchUp du parking pilote. Le modèle 3D illustre une proposition d'infrastructure ; il ne prouve pas la construction ou l'installation des équipements.
+
+\subsection{Infrastructure \& déploiement (feuille de route)}
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{Y Y Y}
+\toprule
+\textbf{Composant} & \textbf{État actuel} & \textbf{Évolution envisagée}\\
+\midrule
+API backend & FastAPI / Python & Déploiement contrôlé et surveillance\\
+Base de données & PostgreSQL & Sauvegarde, migrations et exploitation durable\\
+Cache temps réel & Non intégré & Évaluer Redis si les besoins de charge le justifient\\
+Paiement & Non intégré & Étudier un fournisseur marocain en environnement de test\\
+Notifications & Non intégré & Alertes d'expiration et de disponibilité\\
+Détection de places & Événements prédéfinis du simulateur & Adapter et évaluer le détecteur de places\\
+Énergie & Données météo et calculs/simulations & Raccordement futur d'équipements mesurés\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{État et pistes d'évolution de l'infrastructure}
+
+\chapter{Scalabilité \& Vision Future}
+
+\subsection{Prochaines fonctionnalités}
+
+\begin{center}
+\rowcolors{2}{vertPaleEcoPark}{white}
+\begin{tabularx}{\textwidth}{c Y Y}
+\toprule
+\textbf{Phase} & \textbf{Fonctionnalité} & \textbf{Impact attendu}\\
+\midrule
+V2 & Intégrer le détecteur d'occupation à l'API & Tester des états de places issus de données visuelles\\
+V2 & Améliorer la cartographie & Faciliter la localisation des parkings\\
+V2 & Notifications & Informer sur l'expiration d'une réservation\\
+V2 & Paiement par fournisseur & Ajouter un paiement réel après validation sécurité et conformité\\
+V2 & Administration opérateur & Gérer inventaires et tarifs\\
+V3 & Application mobile / PWA & Étudier l'installation et l'usage mobile\\
+V3 & Multilingue & Étendre les langues de l'interface\\
+V3 & Intégration ONEE & Étudier l'accès à des données énergétiques officielles\\
+V4 & Prévision de la demande & Évaluer les besoins avant de revendiquer une prédiction IA\\
+\bottomrule
+\end{tabularx}
+\end{center}
+\tableau{Feuille de route fonctionnelle actualisée}
+
+\subsection{Potentiel de déploiement national}
+
+Le dossier original cite plus de 2\,000 parkings adressables, 4 millions de conducteurs urbains et plus de 200\,000 véhicules électriques projetés à l'horizon 2030. Ces données de marché ne sont pas vérifiées dans le prototype et nécessitent des références nationales récentes avant d'être reprises comme faits.
+
+La généralisation du service dépendra de l'accès à des inventaires fiables, de l'accord des exploitants, de la qualité des données, de l'intégration des dispositifs et des contraintes réglementaires applicables.
+
+\chapter{Conclusion}
+
+EcoPark Maroc est un prototype qui met en place un parcours logiciel de consultation, de réservation et d'accès QR, avec une interface React, une API FastAPI et une base PostgreSQL. Il comprend aussi un simulateur d'événements de places et un module énergétique d'exploration.
+
+La chaîne de détection visuelle décrite dans le dépôt externe n'est pas encore raccordée au système. Le simulateur caméra transmet des états prédéfinis et le simulateur véhicule teste un parcours séparé de réservation et d'accès. Les équipements solaires et de recharge, les paiements et les indicateurs d'impact restent des scénarios ou estimations, et non des mesures physiques.
+
+La suite du projet consiste à intégrer proprement les résultats \texttt{libre}/\texttt{occupée} d'un détecteur à l'API, à vérifier les cas limites et la qualité sur des données représentatives, puis à évaluer séparément les hypothèses énergétiques et économiques avec des données sourcées.
+
+\chapter*{Références}
+\addcontentsline{toc}{chapter}{Références}
+\begin{enumerate}
+  \item Dépôt externe \textit{Car-Parking-Detection} : \url{https://github.com/8harath/Car-Parking-Detection}.
+  \item Documentation Open-Meteo : \url{https://open-meteo.com/en/docs}.
+  \item Dossier de compétition EcoPark original : \textit{RAPP Competition ver 2.pdf}, conservé sans modification.
+  \item Données du prototype : frontend React, API FastAPI, simulateurs backend et inventaire PostgreSQL EcoPark.
+\end{enumerate}
+
+\end{document}

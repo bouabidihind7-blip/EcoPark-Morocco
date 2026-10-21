@@ -1,0 +1,406 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Lato:wght@100;300;400;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --background: 150 20% 98%;
+    --foreground: 160 15% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 160 15% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 15% 12%;
+    --primary: 158 70% 41%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 150 15% 93%;
+    --secondary-foreground: 160 15% 16%;
+    --muted: 150 12% 93%;
+    --muted-foreground: 155 8% 40%;
+    --accent: 158 70% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 150 10% 85%;
+    --input: 150 10% 85%;
+    --ring: 158 70% 41%;
+    --radius: 0.625rem;
+    
+    /* Custom EcoPark Colors */
+    --eco-green: #1db588;
+    --eco-green-dark: #1a8c6d;
+    --eco-green-light: #2ec595;
+    --eco-dark: #1b1b1b;
+    --eco-dark-gray: #2b2b2b;
+    --eco-white: #ffffff;
+    --eco-light-gray: #f0f0f0;
+    --eco-text-gray: #9b9b9b;
+  }
+
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --background: 0 0% 11%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 17%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 11%;
+    --popover-foreground: 0 0% 100%;
+    --secondary: 0 0% 17%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 25%;
+    --muted-foreground: 0 0% 61%;
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply antialiased;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'Lato', sans-serif;
+    font-style: italic;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#1db588] to-[#2ec595];
+  }
+  
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10 rounded-xl;
+  }
+
+  :root[data-theme='light'] .glass-card {
+    background-color: rgb(255 255 255 / 0.92);
+    border-color: rgb(15 23 42 / 0.09);
+    box-shadow: 0 8px 24px rgb(15 23 42 / 0.05);
+  }
+  
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300 hover:bg-white/10 hover:border-[#1db588]/50 hover:shadow-lg hover:shadow-[#1db588]/10;
+  }
+
+  .landing-hero-background {
+    background-color: #fcfefc;
+    background-image:
+      linear-gradient(135deg, rgb(29 181 136 / 0.055), transparent 48%),
+      radial-gradient(ellipse at 78% 24%, rgb(46 197 149 / 0.07), transparent 42%),
+      linear-gradient(to right, rgb(29 181 136 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(29 181 136 / 0.045) 1px, transparent 1px);
+    background-size: auto, auto, 36px 36px, 36px 36px;
+  }
+
+  .eco-page-background {
+    background-color: #fcfefc;
+    background-image:
+      linear-gradient(to bottom, rgb(29 181 136 / 0.055), transparent 70%),
+      linear-gradient(to right, rgb(29 181 136 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(29 181 136 / 0.045) 1px, transparent 1px);
+    background-size: 100% 100%, 36px 36px, 36px 36px;
+  }
+
+  :root[data-theme='dark'] .eco-page-background {
+    background-color: #10231d;
+    background-image:
+      linear-gradient(to bottom, rgb(29 181 136 / 0.12), transparent 70%),
+      linear-gradient(to right, rgb(125 235 193 / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(125 235 193 / 0.07) 1px, transparent 1px);
+  }
+
+  :root[data-theme='dark'] .landing-hero-background {
+    background-color: #10231d;
+    background-image:
+      linear-gradient(135deg, rgb(29 181 136 / 0.16), transparent 48%),
+      radial-gradient(ellipse at 78% 24%, rgb(46 197 149 / 0.12), transparent 42%),
+      linear-gradient(to right, rgb(125 235 193 / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(125 235 193 / 0.07) 1px, transparent 1px);
+  }
+
+  html[data-theme='light'] [class*='bg-[#1b1b1b]'],
+  html[data-theme='light'] [class*='bg-[#111]'],
+  html[data-theme='light'] [class*='bg-[#0a0a0a]'],
+  html[data-theme='light'] [class*='bg-[#0f0f0f]'],
+  html[data-theme='light'] [class*='bg-black/'] {
+    background-color: rgb(255 255 255 / 0.96) !important;
+  }
+
+  html[data-theme='light'] [class*='bg-white/5'],
+  html[data-theme='light'] [class*='bg-white/8'],
+  html[data-theme='light'] [class*='bg-white/10'] {
+    background-color: rgb(15 23 42 / 0.045) !important;
+  }
+
+  html[data-theme='light'] [class*='border-white/5'],
+  html[data-theme='light'] [class*='border-white/10'],
+  html[data-theme='light'] [class*='border-white/20'] {
+    border-color: rgb(15 23 42 / 0.11) !important;
+  }
+
+  html[data-theme='light'] [class~='text-white'] {
+    color: #1f2937 !important;
+  }
+
+  html[data-theme='light'] [class*='bg-[#1db588]'] [class~='text-white'],
+  html[data-theme='light'] [class*='bg-gradient-to'] [class~='text-white'],
+  html[data-theme='light'] [class~='bg-[#1db588]'][class~='text-white'],
+  html[data-theme='light'] [class*='bg-gradient-to'][class~='text-white'],
+  html[data-theme='light'] [class~='bg-red-500'][class~='text-white'],
+  html[data-theme='light'] [class~='bg-yellow-500'][class~='text-white'] {
+    color: #ffffff !important;
+  }
+
+  html[data-theme='light'] [class~='text-gray-300'],
+  html[data-theme='light'] [class~='text-gray-400'],
+  html[data-theme='light'] [class~='text-gray-500'],
+  html[data-theme='light'] [class~='text-gray-600'],
+  html[data-theme='light'] [class~='text-gray-700'] {
+    color: #5b6674 !important;
+  }
+
+  html[data-theme='light'] [class*='placeholder:text-gray-']::placeholder {
+    color: #687585 !important;
+  }
+
+  html[data-theme='light'] [class*='from-[#1b1b1b]'] {
+    --tw-gradient-from: #f8fbf9 var(--tw-gradient-from-position) !important;
+    --tw-gradient-to: rgb(248 251 249 / 0) var(--tw-gradient-to-position) !important;
+  }
+
+  html[data-theme='light'] [class*='to-[#1b1b1b]'] {
+    --tw-gradient-to: #f8fbf9 var(--tw-gradient-to-position) !important;
+  }
+
+  html[data-theme='light'] ::-webkit-scrollbar-track {
+    background: #eef2f0;
+  }
+
+  html[data-theme='light'] ::-webkit-scrollbar-thumb {
+    background: #cbd5d1;
+  }
+  
+  .glow-green {
+    box-shadow: 0 0 20px rgba(29, 181, 136, 0.3), 0 0 40px rgba(29, 181, 136, 0.1);
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+  }
+  
+  .text-shadow-glow {
+    text-shadow: 0 0 20px rgba(29, 181, 136, 0.5);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(29, 181, 136, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(29, 181, 136, 0.8), 0 0 40px rgba(29, 181, 136, 0.4);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1b1b1b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2b2b2b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1db588;
+}
+
+/* Grid pattern background */
+.grid-pattern {
+  background-image: 
+    linear-gradient(rgba(29, 181, 136, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29, 181, 136, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Noise texture overlay */
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Card 3D tilt effect */
+.tilt-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.tilt-card-inner {
+  transition: transform 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+/* Status indicators */
+.status-available {
+  @apply bg-[#1db588] text-white;
+}
+
+.status-occupied {
+  @apply bg-red-500 text-white;
+}
+
+.status-reserved {
+  @apply bg-yellow-500 text-white;
+}
+
+/* Energy flow animation */
+.energy-flow {
+  background: linear-gradient(90deg, transparent, rgba(29, 181, 136, 0.5), transparent);
+  background-size: 200% 100%;
+  animation: energyFlow 2s linear infinite;
+}
+
+@keyframes energyFlow {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Counter animation */
+.counter-animate {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Leaflet map overrides ─────────────────────────────── */
+.leaflet-container {
+  background: #1b1b1b;
+  border-radius: 16px;
+}
+.leaflet-tile {
+  filter: brightness(0.85) saturate(0.7);
+}
+.leaflet-popup-content-wrapper {
+  background: #1e1e1e;
+  color: #f0f0f0;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.leaflet-popup-tip {
+  background: #1e1e1e;
+}
+.leaflet-popup-close-button {
+  color: #888 !important;
+}
+.leaflet-control-attribution {
+  background: rgba(0,0,0,0.6) !important;
+  color: #555 !important;
+  font-size: 9px;
+}
+.leaflet-control-zoom a {
+  background: #1e1e1e !important;
+  color: #aaa !important;
+  border-color: rgba(255,255,255,0.1) !important;
+}
+.ecopark-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 11px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  box-shadow: 0 3px 12px rgba(0,0,0,0.4);
+  border: 2px solid rgba(255,255,255,0.3);
+}
+.ecopark-pin span {
+  transform: rotate(45deg);
+}

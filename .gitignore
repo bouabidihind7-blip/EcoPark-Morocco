@@ -1,0 +1,25 @@
+.env
+.env.*
+!.env.example
+
+# JavaScript dependencies and generated builds
+**/node_modules/
+**/dist/
+**/build/
+
+# Python environments and caches
+**/.venv/
+**/venv/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# LaTeX generated files
+*.aux
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.out
+*.synctex.gz
+*.toc
